@@ -19,6 +19,7 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
+  //functions for navigation
   logout() {
     this.AuthService.logout(); // Ensure your AuthService has this method
     this.router.navigate(['/welcome']);

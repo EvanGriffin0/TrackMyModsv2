@@ -13,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 export class WelcomePage {
   constructor(private router: Router) {}
 
+  // Navigation functions
   goToLogin() {
     this.router.navigate(['/login']);
   }

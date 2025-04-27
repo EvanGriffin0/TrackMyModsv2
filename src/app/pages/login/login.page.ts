@@ -30,6 +30,7 @@ export class LoginPage {
     });
   }
 
+  //on submit of login form, call the login function from the auth service and navigate to home page on success
   async onSubmit() {
     if (!this.loginForm.valid) return;
     const { email, password } = this.loginForm.value;

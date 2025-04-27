@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+// This file defines the routes for the application. Each route is associated with a component that will be loaded when the route is activated.
 export const routes: Routes = [
   {
     path: 'home',

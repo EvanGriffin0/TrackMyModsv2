@@ -31,6 +31,8 @@ export class AccountRecoveryPage {
     });
   }
 
+
+  //sends reset email to the user using firebase auth service and informs user of success or failure
   async sendResetEmail() {
     if (!this.recoveryForm.valid) return;
     

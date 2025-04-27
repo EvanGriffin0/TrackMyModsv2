@@ -9,6 +9,8 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+
+//uses imports needed for firebase, routing and ionic
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),

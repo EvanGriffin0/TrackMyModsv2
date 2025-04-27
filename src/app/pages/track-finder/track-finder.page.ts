@@ -20,10 +20,12 @@ export class TrackFinderPage implements AfterViewInit {
 
   constructor(private router: Router) {}
 
+  //once on the page is loaded, load the map
   ngAfterViewInit() {
     this.loadMap();
   }
 
+  //using google maps API to load the map and get the users location
   loadMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

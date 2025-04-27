@@ -31,12 +31,14 @@ export class SignupPage {
     }, { validators: this.passwordMatchValidator });
   }
 
+  //validates that the password and confirm password fields match
   passwordMatchValidator(formGroup: FormGroup): null | object {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { mismatch: true };
   }
 
+  //on submit of signup form, call the signup function from the auth service and navigate to home page on success
   async onSubmit() {
     if (!this.signupForm.valid) return;
     const { email, password } = this.signupForm.value;

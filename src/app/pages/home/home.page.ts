@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
    
   }
 
+  //functions for navigation
   goToGarage() {
     this.router.navigate(['/garage']);
   }

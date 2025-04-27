@@ -72,6 +72,7 @@ export class ViewGaragePage implements OnInit {
     private toastController: ToastController
   ) {}
 
+  // Load vehicles and modifications on component initialization
   ngOnInit() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -109,6 +110,7 @@ export class ViewGaragePage implements OnInit {
     });
   }
 
+  //delete vehicle from firestore
   async deleteVehicle(vehicleId: string) {
     const user = this.auth.currentUser;
     if (!user) {
@@ -127,7 +129,7 @@ export class ViewGaragePage implements OnInit {
       this.presentErrorToast();
     }
   }
-  
+  //present alert to confirm deletion of vehicle
   private async presentDeleteAlert(): Promise<boolean> {
     return new Promise(async (resolve) => {
       const alert = await this.alertController.create({
@@ -149,6 +151,7 @@ export class ViewGaragePage implements OnInit {
     });
   }
   
+  //post error if failed to delete vehicle
   private async presentErrorToast() {
     const toast = await this.toastController.create({
       message: 'Failed to delete vehicle',
@@ -159,6 +162,7 @@ export class ViewGaragePage implements OnInit {
     await toast.present();
   }
 
+  //navigation methods
   goBack() {
     this.location.back();
   }
