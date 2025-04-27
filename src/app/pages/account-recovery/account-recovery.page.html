@@ -1,14 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Account Recovery</ion-title>
-  </ion-toolbar>
-</ion-header>
 <ion-content class="ion-padding">
-  <form [formGroup]="recoveryForm" (ngSubmit)="sendPasswordReset()">
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="recoveryForm.invalid">Send Reset Email</ion-button>
-  </form>
+  <!-- Stage 1: Enter Email to Load Security Questions -->
+  <div *ngIf="!questionsLoaded">
+    <h2>Account Recovery</h2>
+    <form [formGroup]="emailForm" (ngSubmit)="loadSecurityData()">
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!emailForm.valid">
+        Load Security Questions
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- Stage 2: Answer Security Questions and Set New Password -->
+  <div *ngIf="questionsLoaded">
+    <h2>Security Questions</h2>
+    <p>What is your Mother's Maiden Name?</p>
+    <p>What is your first pet's name?</p>
+    <form [formGroup]="recoveryForm" (ngSubmit)="verifyAnswersAndRecover()">
+      <ion-item>
+        <ion-label position="floating">Answer 1</ion-label>
+        <ion-input type="text" formControlName="answer1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Answer 2</ion-label>
+        <ion-input type="text" formControlName="answer2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">New Password</ion-label>
+        <ion-input type="password" formControlName="newPassword"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Confirm New Password</ion-label>
+        <ion-input type="password" formControlName="confirmNewPassword"></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!recoveryForm.valid">
+        Submit
+      </ion-button>
+    </form>
+  </div>
 </ion-content>

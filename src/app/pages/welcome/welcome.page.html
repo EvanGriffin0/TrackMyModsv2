@@ -1,13 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>welcome</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">welcome</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <h1>Welcome to TrackMyMods</h1>
+  <ion-button expand="full" (click)="goToLogin()">Login</ion-button>
+  <ion-button expand="full" color="secondary" (click)="goToSignup()">Register</ion-button>
 </ion-content>

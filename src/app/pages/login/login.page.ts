@@ -1,46 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { IonicModule, NavController, ToastController } from '@ionic/angular';
+// src/app/pages/login/login.page.ts
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule,ReactiveFormsModule]
+  imports: [ReactiveFormsModule, IonicModule, CommonModule]
 })
-export class LoginPage implements OnInit {
-  loginForm!: FormGroup;
+export class LoginPage {
+  loginForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private afAuth: AngularFireAuth,
-    private navCtrl: NavController,
-    private toastCtrl: ToastController
-  ) { }
-
-  ngOnInit() {
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', Validators.required]
     });
   }
 
-  async login() {
+  async onSubmit() {
+    if (!this.loginForm.valid) return;
     const { email, password } = this.loginForm.value;
     try {
-      const res = await this.afAuth.signInWithEmailAndPassword(email, password);
-      console.log('Logged in successfully', res);
-      this.navCtrl.navigateForward('/home');
-    } catch (err) {
-      console.error('Login error', err);
-      const toast = await this.toastCtrl.create({
-        message: 'Login Failed. Please check your credentials.',
-        duration: 2000,
-        color: 'danger'
-      });
-      toast.present();
+      await this.authService.login(email, password);
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      this.errorMessage = error.message;
     }
   }
 }

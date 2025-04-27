@@ -1,52 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Sign Up</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-label position="stacked">Email</ion-label>
+      <ion-label position="floating">Email</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].invalid">
-      <small *ngIf="signupForm.controls['email'].errors?.['required']">Email is required.</small>
-      <small *ngIf="signupForm.controls['email'].errors?.['email']">Enter a valid email.</small>
-    </ion-text>
+    <div class="error" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('email')">
+      Please enter a valid email.
+    </div>
 
     <ion-item>
-      <ion-label position="stacked">Password</ion-label>
+      <ion-label position="floating">Password</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].invalid">
-      <small>Password is required.</small>
-    </ion-text>
+    <div class="error" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.hasError('minlength')">
+      Password must be at least 8 characters long.
+    </div>
 
     <ion-item>
-      <ion-label position="stacked">Confirm Password</ion-label>
+      <ion-label position="floating">Confirm Password</ion-label>
       <ion-input type="password" formControlName="confirmPassword"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="signupForm.errors?.notSame && signupForm.controls['confirmPassword'].touched">
-      <small>Passwords do not match.</small>
-    </ion-text>
+    <div class="error" *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched">
+      Passwords do not match.
+    </div>
 
     <ion-item>
-      <ion-label position="stacked">Mother's Maiden Name</ion-label>
-      <ion-input type="text" formControlName="mothersMaiden"></ion-input>
+      <ion-label position="floating">Mother's Maiden Name</ion-label>
+      <ion-input type="text" formControlName="securityAnswer1"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="signupForm.controls['mothersMaiden'].touched && signupForm.controls['mothersMaiden'].invalid">
-      <small>This field is required.</small>
-    </ion-text>
 
     <ion-item>
-      <ion-label position="stacked">Name of Your First Pet</ion-label>
-      <ion-input type="text" formControlName="firstPet"></ion-input>
+      <ion-label position="floating">Name of your First Pet</ion-label>
+      <ion-input type="text" formControlName="securityAnswer2"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="signupForm.controls['firstPet'].touched && signupForm.controls['firstPet'].invalid">
-      <small>This field is required.</small>
-    </ion-text>
 
-    <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">Sign Up</ion-button>
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <ion-button expand="full" type="submit" [disabled]="!signupForm.valid">
+      Register
+    </ion-button>
   </form>
 </ion-content>
