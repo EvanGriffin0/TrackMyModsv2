@@ -1,7 +1,5 @@
-<!-- garage.page.html -->
 <ion-header translucent>
   <ion-toolbar style="--background: #000;">
-    <!-- Back Button (or you can add another if needed) -->
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
@@ -14,9 +12,8 @@
 <ion-content class="ion-padding">
   <div class="container">
     <h1>TRACKMINDOS</h1>
-    <h2>Welcome to the add a vehicle page</h2>
-    <h2>Click add vehicle to add it to your garage !</h2>
-
+    <h2>Welcome to the add vehicle page</h2>
+    <h2>Click add vehicle to add it to your garage!</h2>
 
     <!-- Add Vehicle Form -->
     <div *ngIf="showForm" class="form-section">
@@ -58,36 +55,38 @@
       <ion-button expand="block" (click)="showForm = true">Add Vehicle</ion-button>
     </div>
   </div>
+</ion-content>
 
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
+<!-- Fixed Bottom Navigation -->
+<ion-footer>
+  <ion-toolbar class="bottom-nav">
     <ion-grid>
       <ion-row>
         <!-- Garage -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
+          <ion-button fill="clear" routerLink="/garage" (click)="goToGarage()">
             <ion-icon name="car-outline"></ion-icon>
           </ion-button>
         </ion-col>
-        <!-- Maps (Nearest Track) -->
+        <!-- Track Finder -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
+          <ion-button fill="clear" routerLink="/track-finder" (click)="goToTrackFinder()">
             <ion-icon name="map-outline"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Modifications -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
+          <ion-button fill="clear" routerLink="/modifications" (click)="goToModifications()">
             <ion-icon name="hammer-outline"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Rider Stats -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
+          <ion-button fill="clear" routerLink="/track-mode" (click)="goToTrackMode()">
             <ion-icon name="stats-chart-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>
