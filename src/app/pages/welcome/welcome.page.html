@@ -1,5 +1,11 @@
 <ion-content class="ion-padding">
+  <div class="logo">
+    <img src="../../../assets/logo/Logo.svg" alt="TrackMyMods Logo">
+  </div>
   <h1>Welcome to TrackMyMods</h1>
-  <ion-button expand="full" (click)="goToLogin()">Login</ion-button>
-  <ion-button expand="full" color="secondary" (click)="goToSignup()">Register</ion-button>
+  <p class="description">
+    Log your car upgrades, locate race tracks, and measure your performance—all in one place.
+  </p>
+  <ion-button expand="full" class="login-button" (click)="goToLogin()">Login</ion-button>
+  <ion-button expand="full" class="register-button" (click)="goToSignup()">Register</ion-button>
 </ion-content>

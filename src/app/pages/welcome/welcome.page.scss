@@ -1,0 +1,83 @@
+:host {
+    /* Fullscreen container with a solid black background (no grey overlay) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #cf7e03;
+    /* Optionally, if you still want the orange pattern, keep it here.
+       If not, remove the background-image property */
+    
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+  }
+  
+  ion-content {
+    /* Make the content area transparent so the host's background shows */
+    --background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .logo {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .logo img {
+    width: 150px; /* Adjust as needed */
+    height: auto;
+  }
+  
+  /* Welcome title */
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Description text */
+  .description {
+    font-size: 16px;
+    text-align: center;
+    color: #ddd;
+    margin-bottom: 40px;
+    padding: 0 20px;
+  }
+  
+  /* Centering buttons and giving them a custom width */
+  ion-button {
+    display: block;
+    width: 70%;  /* Adjust percentage to control button width */
+    margin: 8px auto; /* This centers the buttons horizontally */
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  /* Login button: black with white text and border */
+  ion-button.login-button {
+    --background: #000;
+    --background-hover: #fff8f8;
+    --background-activated: #0a0a0a;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  /* Register button: transparent background with white border and text */
+  ion-button.register-button {
+    --background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    --background-hover: rgba(255, 255, 255, 0.1);
+    --background-activated: rgba(255, 255, 255, 0.2);
+  }
+  

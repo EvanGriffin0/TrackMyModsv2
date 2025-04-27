@@ -1,3 +1,13 @@
+<ion-header translucent>
+  <ion-toolbar style="--background: #000;">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color: var(--accent-color);"></ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <ion-item>

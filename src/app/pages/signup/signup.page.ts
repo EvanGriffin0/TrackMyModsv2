@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.services'; // Adjust the import path as necessary
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -22,6 +22,8 @@ export class SignupPage {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private location: Location,
+
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -57,5 +59,8 @@ export class SignupPage {
         this.errorMessage = error.message || 'Registration failed.';
       }
     }
+  }
+  goBack() {
+    this.location.back();
   }
 }

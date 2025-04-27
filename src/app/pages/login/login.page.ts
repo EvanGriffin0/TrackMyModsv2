@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { AuthService } from '../../services/auth.services';
 
 @Component({
@@ -19,8 +20,9 @@ export class LoginPage {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private location: Location,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,7 +41,9 @@ export class LoginPage {
     }
   }
 
-
+  goBack() {
+    this.location.back();
+  }
   navigateToAccountRecovery() {
     this.router.navigate(['/account-recovery']);
   }
