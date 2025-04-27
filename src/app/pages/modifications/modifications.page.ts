@@ -1,9 +1,11 @@
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-// Uncomment these imports if using the Ionic Native Camera plugin
-// import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
+import { Auth,onAuthStateChanged } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-modifications',
@@ -13,42 +15,98 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule]
 })
 export class ModificationsPage {
-
+  vehicles$: any;
+  selectedVehicleId: string | null = null;
   modification = {
     name: '',
     cost: 0,
+    type: 'performance',
     description: '',
-    image: ''
+    image: '',
+    date: new Date()
   };
 
-  constructor(
-    // private camera: Camera
-  ) { }
+  ngOnInit() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        const vehiclesRef = collection(this.firestore, `users/${user.uid}/vehicles`);
+        this.vehicles$ = collectionData(vehiclesRef, { idField: 'id' });
+      }
+    });
+  }
+  
+  private auth = inject(Auth);
+  private location = inject(Location);
+  private router = inject(Router);
+  private firestore = inject(Firestore);
 
-  // Example using a Promise via the Camera plugin
-  async takePicture() {
-    // Uncomment below code after installing the camera plugin and its typings:
-    /*
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
+  constructor() {
+    this.loadVehicles();
+  }
+
+  async loadVehicles() {
+    const user = this.auth.currentUser;
+    if (user) {
+      const vehiclesRef = collection(this.firestore, `users/${user.uid}/vehicles`);
+      this.vehicles$ = collectionData(vehiclesRef, { idField: 'id'});
+    }
+  }
+
+  async saveModification() {
+    const user = this.auth.currentUser;
+    if (!user || !this.selectedVehicleId) return;
 
     try {
-      const imageData = await this.camera.getPicture(options);
-      this.modification.image = 'data:image/jpeg;base64,' + imageData;
+      const modsRef = collection(
+        this.firestore,
+        `users/${user.uid}/vehicles/${this.selectedVehicleId}/modifications`
+      );
+      
+      await addDoc(modsRef, {
+        ...this.modification,
+        vehicleId: this.selectedVehicleId
+      });
+      
+      this.resetForm();
+      console.log('Modification saved successfully!');
     } catch (error) {
-      console.error('Camera error:', error);
+      console.error('Error saving modification:', error);
     }
-    */
-    // For now, simulate setting an image:
-    this.modification.image = 'assets/placeholder-mod.png';
   }
 
-  saveModification() {
-    // Save modification data to Firestore (or local storage) here.
-    console.log('Modification saved:', this.modification);
+  private resetForm() {
+    this.modification = {
+      name: '',
+      cost: 0,
+      type: 'performance',
+      description: '',
+      image: '',
+      date: new Date()
+    };
+  }
+
+  goToGarage() {
+    this.router.navigate(['/garage']);
+  }
+  goToTrackFinder() {
+    this.router.navigate(['/track-finder']);
+  }
+  
+  goToModifications() {
+    this.router.navigate(['/modifications']);
+  }
+
+
+  goToSettings() {
+    this.router.navigate(['/settings']);
+  }
+
+  goToTrackMode() {
+    this.router.navigate(['/track-mode']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }
+
