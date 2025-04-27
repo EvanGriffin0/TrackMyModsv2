@@ -34,7 +34,20 @@ export class AccountRecoveryPage {
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', Validators.required]
     });
-  }
+    }
+  
+    // Map error codes to user-friendly error messages
+    getErrorMessage(errorCode: string): string {
+      const errorMessages: { [key: string]: string } = {
+        'auth/user-not-found': 'No user found with this email.',
+        'auth/wrong-password': 'Incorrect password.',
+        'auth/weak-password': 'Password is too weak.',
+        // Add more error codes and messages as needed
+      };
+  
+      return errorMessages[errorCode] || 'An unexpected error occurred.';
+    }
+  
 
   // Load the security data from Firestore based on the entered email.
   async loadSecurityData() {
@@ -57,25 +70,31 @@ export class AccountRecoveryPage {
   async verifyAnswersAndRecover() {
     if (!this.recoveryForm.valid) return;
     const { answer1, answer2, newPassword, confirmNewPassword } = this.recoveryForm.value;
-    
+    const email = this.emailForm.value.email;
+  
     if (newPassword !== confirmNewPassword) {
       this.presentToast('Passwords do not match.');
       return;
     }
   
-    // Get stored answers (case-insensitive comparison)
-    const storedAnswers = this.securityData.securityQuestions;
-    
-    if (answer1.trim().toLowerCase() === storedAnswers.answer1.toLowerCase() &&
-        answer2.trim().toLowerCase() === storedAnswers.answer2.toLowerCase()) {
-      // Implement actual password reset logic here
-      this.presentToast("Password reset successful!");
+    try {
+      // Verify security answers
+      const answersValid = await this.authService.verifySecurityAnswers(email, answer1, answer2);
+      
+      if (!answersValid) {
+        this.presentToast('Security answers do not match.');
+        return;
+      }
+  
+      // Update password
+      await this.authService.updateUserPassword(email, newPassword);
+      this.presentToast('Password updated successfully!');
       this.router.navigate(['/login']);
-    } else {
-      this.presentToast('Security answers do not match.');
+    } catch (error: any) {
+      this.presentToast(this.getErrorMessage(error.code));
     }
   }
-
+  
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,

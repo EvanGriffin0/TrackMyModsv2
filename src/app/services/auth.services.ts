@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword,signInWithEmailAndPassword,updatePassword  } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, collection, query, where, getDocs } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,33 @@ import { Firestore, doc, setDoc, collection, query, where, getDocs } from '@angu
 export class AuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
+  private router = inject(Router);
+
+  async verifySecurityAnswers(email: string, answer1: string, answer2: string): Promise<boolean> {
+    const q = query(
+      collection(this.firestore, 'userSecurity'),
+      where('email', '==', email)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) return false;
+
+    const userData = querySnapshot.docs[0].data();
+    return answer1.toLowerCase().trim() === userData['securityAnswer1'].toLowerCase().trim() &&
+           answer2.toLowerCase().trim() === userData['securityAnswer2'].toLowerCase().trim();
+  }
+
+    async updateUserPassword(email: string, newPassword: string): Promise<void> {
+        // First sign in with temporary credentials (requires special setup)
+        const tempPassword = 'temporary_password'; // Should be stored securely
+        const userCredential = await signInWithEmailAndPassword(this.auth, email, tempPassword);
+        
+        // Now update password
+        await updatePassword(userCredential.user, newPassword);
+        
+        // Immediately sign out for security
+        await this.auth.signOut();
+    }
 
   async signUp(email: string, password: string, securityAnswer1: string, securityAnswer2: string) {
     try {
@@ -66,7 +94,14 @@ export class AuthService {
   }
 
   // Update login method
-  async login(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+ 
+async login(email: string, password: string): Promise<void> {
+    try {
+      await signInWithEmailAndPassword(this.auth, email, password);
+      this.router.navigate(['/home']); // Add navigation
+    } catch (error) {
+      console.error('Login Error:', error);
+      throw error; // Propagate error to component
+    }
   }
 }

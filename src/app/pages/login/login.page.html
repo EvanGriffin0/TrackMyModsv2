@@ -20,5 +20,14 @@
     <ion-button expand="full" type="submit" [disabled]="!loginForm.valid">
       Login
     </ion-button>
+
+    <ion-button 
+    expand="block" 
+    fill="clear" 
+    color="medium" 
+    (click)="navigateToAccountRecovery()"
+  >
+    Forgot Password?
+  </ion-button>
   </form>
 </ion-content>

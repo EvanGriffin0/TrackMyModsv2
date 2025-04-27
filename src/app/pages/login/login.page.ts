@@ -38,4 +38,9 @@ export class LoginPage {
       this.errorMessage = error.message;
     }
   }
+
+
+  navigateToAccountRecovery() {
+    this.router.navigate(['/account-recovery']);
+  }
 }
