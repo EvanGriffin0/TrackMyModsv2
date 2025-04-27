@@ -11,13 +11,11 @@ import { AuthService } from '../../services/auth.services';
   templateUrl: './account-recovery.page.html',
   styleUrls: ['./account-recovery.page.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, IonicModule, CommonModule]
+  imports: [ReactiveFormsModule, IonicModule, CommonModule],
 })
 export class AccountRecoveryPage {
-  emailForm: FormGroup;
   recoveryForm: FormGroup;
-  securityData: any;
-  questionsLoaded = false;
+  isSending = false;
 
   constructor(
     private fb: FormBuilder,
@@ -25,76 +23,37 @@ export class AccountRecoveryPage {
     private toastCtrl: ToastController,
     private router: Router
   ) {
-    this.emailForm = this.fb.group({
+    this.recoveryForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
-    this.recoveryForm = this.fb.group({
-      answer1: ['', Validators.required],
-      answer2: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
-      confirmNewPassword: ['', Validators.required]
-    });
-    }
-  
-    // Map error codes to user-friendly error messages
-    getErrorMessage(errorCode: string): string {
-      const errorMessages: { [key: string]: string } = {
-        'auth/user-not-found': 'No user found with this email.',
-        'auth/wrong-password': 'Incorrect password.',
-        'auth/weak-password': 'Password is too weak.',
-        // Add more error codes and messages as needed
-      };
-  
-      return errorMessages[errorCode] || 'An unexpected error occurred.';
-    }
-  
-
-  // Load the security data from Firestore based on the entered email.
-  async loadSecurityData() {
-    if (!this.emailForm.valid) return;
-    const { email } = this.emailForm.value;
-    try {
-      const data = await this.authService.getSecurityData(email);
-      if (!data) {
-        this.presentToast('No account found with that email.');
-      } else {
-        this.securityData = data;
-        this.questionsLoaded = true;
-      }
-    } catch (error: any) {
-      this.presentToast(error.message);
-    }
   }
 
-  // Verify the security answers and, if correct, trigger password recovery.
-  async verifyAnswersAndRecover() {
+  async sendResetEmail() {
     if (!this.recoveryForm.valid) return;
-    const { answer1, answer2, newPassword, confirmNewPassword } = this.recoveryForm.value;
-    const email = this.emailForm.value.email;
-  
-    if (newPassword !== confirmNewPassword) {
-      this.presentToast('Passwords do not match.');
-      return;
-    }
-  
+    
+    this.isSending = true;
+    const email = this.recoveryForm.get('email')?.value;
+    
     try {
-      // Verify security answers
-      const answersValid = await this.authService.verifySecurityAnswers(email, answer1, answer2);
-      
-      if (!answersValid) {
-        this.presentToast('Security answers do not match.');
-        return;
-      }
-  
-      // Update password
-      await this.authService.updateUserPassword(email, newPassword);
-      this.presentToast('Password updated successfully!');
+      await this.authService.sendPasswordResetEmail(email);
+      this.presentToast('Password reset link sent! Check your email');
       this.router.navigate(['/login']);
-    } catch (error: any) {
-      this.presentToast(this.getErrorMessage(error.code));
+    } catch (error) {
+      this.presentToast(this.getErrorMessage(error));
+    } finally {
+      this.isSending = false;
     }
   }
-  
+
+  getErrorMessage(error: any): string {
+    const errorMessages: { [key: string]: string } = {
+      'auth/user-not-found': 'No account found with this email',
+      'auth/invalid-email': 'Invalid email format',
+      'auth/too-many-requests': 'Too many attempts. Try again later'
+    };
+    return errorMessages[error?.code] || 'Error sending reset link. Try again later';
+  }
+
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,

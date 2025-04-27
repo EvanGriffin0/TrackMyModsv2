@@ -1,10 +1,10 @@
 // src/app/pages/signup/signup.page.ts
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.services'; // Adjust the import path as necessary
+import { AuthService } from '../../services/auth.services';
 import { Location } from '@angular/common';
 
 @Component({
@@ -22,19 +22,15 @@ export class SignupPage {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private location: Location,
-
+    private location: Location
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
-      securityAnswer1: ['', Validators.required],
-      securityAnswer2: ['', Validators.required]
+      confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }
 
-  // Custom validator to verify passwords match.
   passwordMatchValidator(formGroup: FormGroup): null | object {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
@@ -43,23 +39,22 @@ export class SignupPage {
 
   async onSubmit() {
     if (!this.signupForm.valid) return;
-    const { email, password, securityAnswer1, securityAnswer2 } = this.signupForm.value;
+    const { email, password } = this.signupForm.value;
   
     try {
-      await this.authService.signUp(email, password, securityAnswer1, securityAnswer2);
+      await this.authService.signUp(email, password);
       this.router.navigate(['/home']);
     } catch (error: any) {
-      console.error('Signup Error:', error); // Check browser console
-  
+      console.error('Signup Error:', error);
+      
       if (error.code === 'auth/email-already-in-use') {
         this.errorMessage = 'Email is already in use.';
-      } else if (error.code === 'permission-denied') {
-        this.errorMessage = 'Failed to save security answers. Contact support.';
       } else {
         this.errorMessage = error.message || 'Registration failed.';
       }
     }
   }
+
   goBack() {
     this.location.back();
   }
