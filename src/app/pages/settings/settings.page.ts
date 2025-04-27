@@ -19,6 +19,14 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
+  logout() {
+    this.AuthService.logout(); // Ensure your AuthService has this method
+    this.router.navigate(['/welcome']);
+  }
+  goToAcccountRecovery() {
+    this.router.navigate(['/account-recovery']);  
+  }
+
   goToGarage() {
     this.router.navigate(['/garage']);
   }

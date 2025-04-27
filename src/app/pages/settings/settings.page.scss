@@ -1,56 +1,68 @@
-.settings-content {
-    --background: #FFA500; /* Orange background for main content */
-    color: #fff;
+:root {
+    --background-color: #111;
+    --accent-color: #FFA500;
+    --settings-bg: #FFA500;
+    --text-color: #fff;
+  }
+  
+  /* Settings Content Styling */
+  .settings-content {
+    --background: var(--settings-bg);
+    color: var(--text-color);
     padding: 16px;
-    position: relative;
   }
   
+  /* Ensure the content doesn’t get hidden by the fixed footer */
   .content-wrapper {
-    margin-bottom: 120px; /* Ensure there's space above the bottom navigation */
+    margin-bottom: calc(120px + env(safe-area-inset-bottom));
   }
   
-  /* Styling for settings items */
+  /* Styling for Ion Items & Dividers */
   ion-item,
   ion-item-divider {
     --background: transparent;
-    color: #fff;
+    color: var(--text-color);
   }
   
- /* Bottom Navigation Styled to Match Home Page */
- .bottom-nav {
-    height: 80px; /* Match this with padding-bottom */
-    background-color: #000;
+  /* Bottom Navigation Styling */
+  .bottom-nav {
+    background-color: #000; 
     border-top: 2px solid #FFA500;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
     padding: 8px 0;
-    /* Remove fixed positioning */
-    position: relative;
-    z-index: 1;
   }
   
-  :host {
-    ion-icon {
-      color: #FFA500;
-      font-size: 1.5rem;
-    }
-  }
-  
-  /* Customize the toggle appearance */
-  ion-toggle {
-    --handle-background: #FFA500;
-    --background: #000;
-  }
-    /* Optionally, adjust ion-footer to be fixed if needed */
-    ion-footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        z-index: 10; /* Make sure it sits above the content */
-      }
-      /* Ensure icons use the accent color */
-      
   :host {
     ion-icon {
       color: #fff; /* For a subtle contrast, if you prefer accent color, change to #FFA500 */
       font-size: 1.5rem;
     }
   }
+  
+  
+  /* Fix the footer to the bottom of the viewport */
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  
+  /* Icon Styling (consolidated via CSS variables) */
+
+  
+  /* Button feedback for a more dynamic feel */
+  ion-button {
+    transition: transform 0.15s ease;
+  }
+  
+  ion-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Customize the toggle appearance if used in the future */
+  ion-toggle {
+    --handle-background: var(--accent-color);
+    --background: #000;
+  }
+  

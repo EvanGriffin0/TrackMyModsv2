@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword,signInWithEmailAndPassword,updatePassword  } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword,signInWithEmailAndPassword,updatePassword ,signOut } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, collection, query, where, getDocs } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -36,6 +36,16 @@ export class AuthService {
         // Immediately sign out for security
         await this.auth.signOut();
     }
+
+    async logout(): Promise<void> {
+        try {
+          await signOut(this.auth);
+          this.router.navigate(['/welcome']);
+        } catch (error) {
+          console.error('Logout Error:', error);
+          throw error;
+        }
+      }
 
   async signUp(email: string, password: string, securityAnswer1: string, securityAnswer2: string) {
     try {
