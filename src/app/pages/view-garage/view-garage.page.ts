@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController, AlertController } from '@ionic/angular';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { Firestore, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
@@ -19,8 +21,10 @@ export class ViewGaragePage implements OnInit {
   constructor(
     private firestore: Firestore,
     private auth: Auth,
-    private toastController: ToastController,
-    private alertController: AlertController
+    private location: Location,
+    private router: Router,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -86,5 +90,30 @@ export class ViewGaragePage implements OnInit {
       position: 'top'
     });
     await toast.present();
+  }
+
+
+  goBack() {
+    this.location.back();
+  }
+
+  goToGarage() {
+    this.router.navigate(['/garage']);
+  }
+  goToTrackFinder() {
+    this.router.navigate(['/track-finder']);
+  }
+  
+  goToModifications() {
+    this.router.navigate(['/modifications']);
+  }
+
+
+  goToSettings() {
+    this.router.navigate(['/settings']);
+  }
+
+  goToTrackMode() {
+    this.router.navigate(['/view-garage']);
   }
 }

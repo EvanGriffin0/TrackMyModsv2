@@ -1,7 +1,15 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>My Garage</ion-title>
-  </ion-toolbar>
+  <ion-header translucent>
+    <ion-toolbar style="--background: #000;">
+      <!-- Back Button (or you can add another if needed) -->
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+          <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title style="color: #FFA500;"> Garage</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -43,5 +51,37 @@
         <p>No vehicles in your garage</p>
       </div>
     </ion-list>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <ion-grid>
+      <ion-row>
+        <!-- Garage -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
+            <ion-icon name="car-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Maps (Nearest Track) -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
+            <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Modifications -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
+            <ion-icon name="hammer-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Rider Stats -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
