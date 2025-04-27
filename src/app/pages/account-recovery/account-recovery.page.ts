@@ -5,6 +5,8 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.services';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-account-recovery',
@@ -21,7 +23,8 @@ export class AccountRecoveryPage {
     private fb: FormBuilder,
     private authService: AuthService,
     private toastCtrl: ToastController,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     this.recoveryForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
@@ -60,5 +63,8 @@ export class AccountRecoveryPage {
       duration: 2000
     });
     await toast.present();
+  }
+  goBack() {
+    this.location.back();
   }
 }
