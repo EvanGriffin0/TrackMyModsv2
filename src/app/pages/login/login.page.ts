@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { NavController, ToastController } from '@ionic/angular';
+import { IonicModule, NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: true,
+  imports: [IonicModule,ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,

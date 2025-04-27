@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 // Uncomment these imports if using the Ionic Native Camera plugin
 // import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -6,6 +9,8 @@ import { Component } from '@angular/core';
   selector: 'app-modifications',
   templateUrl: './modifications.page.html',
   styleUrls: ['./modifications.page.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class ModificationsPage {
 

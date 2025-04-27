@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then( m => m.HomePage)
+    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
   {
     path: '',
@@ -35,17 +35,14 @@ const routes: Routes = [
         (m) => m.AccountRecoveryPage
       )
   },
-  {
-    path: 'home',
-    loadComponent: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },
+
   {
     path: 'settings',
     loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
   },
   {
     path: 'garage',
-    loadComponent: () => import('./pages/garage/garage.module').then( m => m.GaragePageModule)
+    loadComponent: () => import('./pages/garage/garage.page').then( m => m.GaragePage)
   },
   {
     path: 'modifications',

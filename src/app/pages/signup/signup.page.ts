@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { NavController, ToastController } from '@ionic/angular';
+import { IonicModule, NavController, ToastController } from '@ionic/angular';
+import { IonHeader } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
+  standalone: true,
+  imports: [IonHeader,IonicModule,ReactiveFormsModule]
 })
 export class SignupPage implements OnInit {
-  signupForm: FormGroup;
+  signupForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -33,8 +36,8 @@ export class SignupPage implements OnInit {
 
   // Custom validator: returns null if passwords match
   checkPasswords(group: FormGroup) {
-    const pass = group.get('password').value;
-    const confirmPass = group.get('confirmPassword').value;
+    const pass = group.get('password')!.value;
+    const confirmPass = group.get('confirmPassword')!.value;
     return pass === confirmPass ? null : { notSame: true };
   }
 

@@ -1,15 +1,18 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Blank</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <h2>Welcome to TrackMyMods</h2>
-  <ion-button expand="block" routerLink="/garage">Go to Garage</ion-button>
-  <ion-button expand="block" routerLink="/track-finder">Find Tracks</ion-button>
-  <ion-button expand="block" routerLink="/track-mode">Track Mode</ion-button>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <!-- Page content goes here -->
   <ion-list>
-    <ion-item *ngFor="let item of data | slice:0:5">
+    <ion-item *ngFor="let item of data">
       <ion-label>{{ item.title }}</ion-label>
     </ion-item>
   </ion-list>

@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-recovery',
   templateUrl: './account-recovery.page.html',
   styleUrls: ['./account-recovery.page.scss'],
+  standalone: true,
+  imports: [IonicModule,ReactiveFormsModule,]
 })
 export class AccountRecoveryPage implements OnInit {
-  recoveryForm: FormGroup;
+  recoveryForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
