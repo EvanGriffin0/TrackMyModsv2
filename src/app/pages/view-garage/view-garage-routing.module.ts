@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TrackModePage } from './track-mode.page';
+import { ViewGaragePage } from './view-garage.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TrackModePage
+    component: ViewGaragePage
   }
 ];
 

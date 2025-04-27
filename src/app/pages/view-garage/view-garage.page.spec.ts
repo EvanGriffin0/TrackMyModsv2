@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TrackModePage } from './track-mode.page';
+import { ViewGaragePage } from './view-garage.page';
 
-describe('TrackModePage', () => {
-  let component: TrackModePage;
-  let fixture: ComponentFixture<TrackModePage>;
+describe('ViewGaragePage', () => {
+  let component: ViewGaragePage;
+  let fixture: ComponentFixture<ViewGaragePage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TrackModePage);
+    fixture = TestBed.createComponent(ViewGaragePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

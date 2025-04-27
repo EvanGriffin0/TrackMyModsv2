@@ -1,10 +1,93 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Garage</ion-title>
+<!-- garage.page.html -->
+<ion-header translucent>
+  <ion-toolbar style="--background: #000;">
+    <!-- Back Button (or you can add another if needed) -->
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color: #FFA500;">Add Vehicle To Garage</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
-  <h2>Your Vehicles</h2>
-  <!-- List existing vehicles here and options to add a new one -->
-  <ion-button routerLink="/modifications">View Vehicle Modifications</ion-button>
+  <div class="container">
+    <h1>TRACKMINDOS</h1>
+    <h2>Welcome to the add a vehicle page</h2>
+    <h2>Click add vehicle to add it to your garage !</h2>
+
+
+    <!-- Add Vehicle Form -->
+    <div *ngIf="showForm" class="form-section">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Vehicle Name</ion-label>
+          <ion-input [(ngModel)]="newVehicle.vehicleName"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Mileage</ion-label>
+          <ion-input type="number" [(ngModel)]="newVehicle.mileage"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Vehicle Type</ion-label>
+          <ion-input [(ngModel)]="newVehicle.vehicleType"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Power</ion-label>
+          <ion-input [(ngModel)]="newVehicle.power"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Year of Registration</ion-label>
+          <ion-input [(ngModel)]="newVehicle.year"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <div class="form-actions">
+        <ion-button expand="block" (click)="saveVehicle()">Save Vehicle</ion-button>
+        <ion-button expand="block" fill="outline" (click)="showForm = false">Cancel</ion-button>
+      </div>
+    </div>
+
+    <!-- Add Vehicle Button -->
+    <div class="add-button" *ngIf="!showForm">
+      <ion-button expand="block" (click)="showForm = true">Add Vehicle</ion-button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <ion-grid>
+      <ion-row>
+        <!-- Garage -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
+            <ion-icon name="car-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Maps (Nearest Track) -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
+            <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Modifications -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
+            <ion-icon name="hammer-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Rider Stats -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

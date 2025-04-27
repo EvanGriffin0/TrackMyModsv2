@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Garage</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="container">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Your Vehicles</ion-label>
+      </ion-list-header>
+
+      <ion-item-sliding *ngFor="let vehicle of vehicles$ | async">
+        <ion-item>
+          <ion-label>
+            <h2>{{ vehicle.vehicleName }}</h2>
+            <p>Type: {{ vehicle.vehicleType }}</p>
+            <p>Mileage: {{ vehicle.mileage }}</p>
+            <p>Power: {{ vehicle.power }} | Year: {{ vehicle.year }}</p>
+            <p>Modifications: {{ vehicle.modsDone }}</p>
+          </ion-label>
+
+          <ion-button 
+              slot="end" 
+              color="danger" 
+              (click)="deleteVehicle(vehicle.id)"
+              class="delete-button"
+            >
+              <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteVehicle(vehicle.id)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <div *ngIf="(vehicles$ | async)?.length === 0" class="empty-state">
+        <ion-icon name="car-sport-outline"></ion-icon>
+        <p>No vehicles in your garage</p>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

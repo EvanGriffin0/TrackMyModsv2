@@ -52,7 +52,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/track-finder/track-finder.page').then( m => m.TrackFinderPage)
   },
   {
-    path: 'track-mode',
-    loadComponent: () => import('./pages/track-mode/track-mode.page').then( m => m.TrackModePage)
+    path: 'view-garage',
+    loadComponent: () => import('./pages/view-garage/view-garage.page').then( m => m.ViewGaragePage)
   },
 ];
