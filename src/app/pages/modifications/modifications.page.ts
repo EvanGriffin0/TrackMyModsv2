@@ -111,7 +111,9 @@ export class ModificationsPage {
     this.router.navigate(['/modifications']);
   }
 
-
+  goHome() {
+    this.router.navigate(['/home']);
+  }
   goToSettings() {
     this.router.navigate(['/settings']);
   }

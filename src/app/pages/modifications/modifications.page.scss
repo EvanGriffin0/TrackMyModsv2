@@ -1,0 +1,81 @@
+/* modifications.page.scss */
+
+/* Overall content styling */
+ion-content {
+    /* Ensure extra bottom padding so that content isn't hidden behind the fixed footer */
+    padding-bottom: 80px;
+    background-color: #111; /* Dark background for contrast */
+    color: #fff;
+  }
+  
+  /* Headings and labels, if you add any */
+  h1, h2, h3, ion-label {
+    color: #fff;
+  }
+  
+  /* Style for the form elements within ion-item */
+  ion-item {
+    --background: transparent; /* Keep original background transparent */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  
+  ion-label {
+    font-weight: 500;
+  }
+  
+  /* Inputs and textareas should use a light text color */
+  ion-input, 
+  ion-textarea, 
+  ion-select {
+    color: #fff;
+  }
+  
+  /* Add some spacing to form fields */
+  ion-item:not(:last-of-type) {
+    margin-bottom: 12px;
+  }
+  
+  /* Button styling */
+  ion-button {
+    --border-radius: 8px;
+    margin-top: 16px;
+    font-weight: bold;
+  }
+  
+  /* Optional container or wrapper around your form area */
+  .form-section {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Bottom Navigation Styling */
+  .bottom-nav {
+    background-color: #000; /* Solid black background */
+    border-top: 2px solid #FFA500; /* Accent border on top */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    padding: 8px 0;
+  }
+  
+  /* Ensure icons take on the accent color */
+  :host {
+    ion-icon {
+      color: #FFA500;
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Fix the footer at the bottom of the screen */
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  

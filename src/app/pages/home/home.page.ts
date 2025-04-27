@@ -29,7 +29,9 @@ export class HomePage implements OnInit {
   goToModifications() {
     this.router.navigate(['/modifications']);
   }
-
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 
   goToSettings() {
     this.router.navigate(['/settings']);

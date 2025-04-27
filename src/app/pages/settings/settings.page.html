@@ -56,34 +56,41 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <ion-grid>
-      <ion-row>
-        <!-- Garage -->
-        <ion-col class="ion-text-center">
-          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
-            <ion-icon name="car-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <!-- Maps (Nearest Track) -->
-        <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
-            <ion-icon name="map-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <!-- Modifications -->
-        <ion-col class="ion-text-center">
-          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
-            <ion-icon name="hammer-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <!-- Rider Stats -->
-        <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
-            <ion-icon name="stats-chart-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-</ion-content>
+  <ion-footer>
+    <ion-toolbar class="bottom-nav">
+      <ion-grid>
+        <ion-row>
+          <!-- Garage -->
+          <ion-col class="ion-text-center">
+            <ion-button fill="clear" routerLink="/garage" (click)="goToGarage()">
+              <ion-icon name="car-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <!-- Track Finder -->
+          <ion-col class="ion-text-center">
+            <ion-button fill="clear" routerLink="/track-finder" (click)="goToTrackFinder()">
+              <ion-icon name="map-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <!-- Home (Center Button) -->
+          <ion-col class="ion-text-center">
+            <ion-button fill="clear" routerLink="/home" (click)="goHome()">
+              <ion-icon name="home-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <!-- Modifications -->
+          <ion-col class="ion-text-center">
+            <ion-button fill="clear" routerLink="/modifications" (click)="goToModifications()">
+              <ion-icon name="hammer-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <!-- Rider Stats -->
+          <ion-col class="ion-text-center">
+            <ion-button fill="clear" routerLink="/track-mode" (click)="goToTrackMode()">
+              <ion-icon name="stats-chart-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>

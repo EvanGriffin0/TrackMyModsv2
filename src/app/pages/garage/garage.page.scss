@@ -46,17 +46,15 @@
   
   /* Bottom Navigation Styled to Match Home Page */
   .bottom-nav {
+    height: 80px; /* Match this with padding-bottom */
     background-color: #000;
-    border-top: 1px solid #FFA500;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    border-top: 2px solid #FFA500;
     padding: 8px 0;
-  
-    ion-grid {
-      padding: 0 10px;
-    }
+    /* Remove fixed positioning */
+    position: relative;
+    z-index: 1;
   }
   
-  /* Ensure icons use the accent color */
   :host {
     ion-icon {
       color: #FFA500;

@@ -27,17 +27,26 @@
     margin: 16px 0;
   }
   
+  /* Bottom Navigation Style */
   .bottom-nav {
-    position: absolute;
-    bottom: 0; 
-    width: 100%;
     background-color: #000; 
-    border: 2px solid #000; 
-    border-radius: 8px;
+    border-top: 2px solid #FFA500;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
     padding: 8px 0;
   }
+  
   :host {
     ion-icon {
-      color: #fff;
+      color: #fff; /* For a subtle contrast, if you prefer accent color, change to #FFA500 */
+      font-size: 1.5rem;
     }
   }
+  
+  /* Use ion-footer to fix the bottom nav */
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  

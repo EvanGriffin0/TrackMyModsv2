@@ -10,75 +10,83 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- Add extra bottom padding to ensure content isn't hidden behind the footer -->
-<ion-content class="ion-padding" style="padding-bottom: 80px;">
-  <!-- Vehicle Selection -->
-  <ion-item>
-    <ion-label>Select Vehicle</ion-label>
-    <ion-select [(ngModel)]="selectedVehicleId">
-      <ion-select-option *ngFor="let vehicle of vehicles$ | async" [value]="vehicle.id">
-        {{ vehicle.vehicleName }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+<ion-content class="ion-padding">
+  <!-- Wrap the form content in a styled container -->
+  <div class="form-section">
+    <!-- Vehicle Selection -->
+    <ion-item>
+      <ion-label>Select Vehicle</ion-label>
+      <ion-select [(ngModel)]="selectedVehicleId">
+        <ion-select-option *ngFor="let vehicle of vehicles$ | async" [value]="vehicle.id">
+          {{ vehicle.vehicleName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <!-- Modification Form -->
-  <ion-item>
-    <ion-label position="stacked">Modification Name</ion-label>
-    <ion-input [(ngModel)]="modification.name"></ion-input>
-  </ion-item>
+    <!-- Modification Form Fields -->
+    <ion-item>
+      <ion-label position="stacked">Modification Name</ion-label>
+      <ion-input [(ngModel)]="modification.name"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Cost</ion-label>
-    <ion-input type="number" [(ngModel)]="modification.cost"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Cost</ion-label>
+      <ion-input type="number" [(ngModel)]="modification.cost"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Type</ion-label>
-    <ion-select [(ngModel)]="modification.type">
-      <ion-select-option value="performance">Performance</ion-select-option>
-      <ion-select-option value="cosmetic">Cosmetic</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Type</ion-label>
+      <ion-select [(ngModel)]="modification.type">
+        <ion-select-option value="performance">Performance</ion-select-option>
+        <ion-select-option value="cosmetic">Cosmetic</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Description</ion-label>
-    <ion-textarea [(ngModel)]="modification.description"></ion-textarea>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea [(ngModel)]="modification.description"></ion-textarea>
+    </ion-item>
 
-  <ion-button expand="block" (click)="saveModification()"
-    [disabled]="!selectedVehicleId || !modification.name">
-    Save Modification
-  </ion-button>
+    <ion-button expand="block" (click)="saveModification()"
+                [disabled]="!selectedVehicleId || !modification.name">
+      Save Modification
+    </ion-button>
+  </div>
 </ion-content>
 
 <!-- Fixed Bottom Navigation -->
 <ion-footer>
-  <ion-toolbar style="--background: #000;">
+  <ion-toolbar class="bottom-nav">
     <ion-grid>
       <ion-row>
         <!-- Garage -->
         <ion-col class="ion-text-center">
           <ion-button fill="clear" routerLink="/garage" (click)="goToGarage()">
-            <ion-icon name="car-outline" style="color: #FFA500;"></ion-icon>
+            <ion-icon name="car-outline"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Maps (Nearest Track) -->
         <ion-col class="ion-text-center">
           <ion-button fill="clear" routerLink="/track-finder" (click)="goToTrackFinder()">
-            <ion-icon name="map-outline" style="color: #FFA500;"></ion-icon>
+            <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+         <!-- Home (Center Button) -->
+         <ion-col class="ion-text-center">
+          <ion-button fill="clear" routerLink="/home" (click)="goHome()">
+            <ion-icon name="home-outline"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Modifications -->
         <ion-col class="ion-text-center">
           <ion-button fill="clear" routerLink="/modifications" (click)="goToModifications()">
-            <ion-icon name="hammer-outline" style="color: #FFA500;"></ion-icon>
+            <ion-icon name="hammer-outline"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Rider Stats -->
         <ion-col class="ion-text-center">
           <ion-button fill="clear" routerLink="/track-mode" (click)="goToTrackMode()">
-            <ion-icon name="stats-chart-outline" style="color: #FFA500;"></ion-icon>
+            <ion-icon name="stats-chart-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>

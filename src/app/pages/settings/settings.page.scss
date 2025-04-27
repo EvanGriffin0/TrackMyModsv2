@@ -16,21 +16,21 @@
     color: #fff;
   }
   
-  /* Bottom Navigation matching home page style */
-  .bottom-nav {
-    position: absolute;
-    bottom: 0; /* Pin directly to the bottom */
-    width: 100%;
-    background-color: #000; /* Black background */
-    border: 2px solid #000; /* Black border */
-    border-radius: 8px;
+ /* Bottom Navigation Styled to Match Home Page */
+ .bottom-nav {
+    height: 80px; /* Match this with padding-bottom */
+    background-color: #000;
+    border-top: 2px solid #FFA500;
     padding: 8px 0;
+    /* Remove fixed positioning */
+    position: relative;
+    z-index: 1;
   }
   
-  /* Ensure all icons are white on this page */
   :host {
     ion-icon {
-      color: #fff;
+      color: #FFA500;
+      font-size: 1.5rem;
     }
   }
   
@@ -39,4 +39,18 @@
     --handle-background: #FFA500;
     --background: #000;
   }
-  
+    /* Optionally, adjust ion-footer to be fixed if needed */
+    ion-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 10; /* Make sure it sits above the content */
+      }
+      /* Ensure icons use the accent color */
+      
+  :host {
+    ion-icon {
+      color: #fff; /* For a subtle contrast, if you prefer accent color, change to #FFA500 */
+      font-size: 1.5rem;
+    }
+  }

@@ -182,4 +182,7 @@ export class ViewGaragePage implements OnInit {
   goToTrackMode() {
     this.router.navigate(['/view-garage']);
   }
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

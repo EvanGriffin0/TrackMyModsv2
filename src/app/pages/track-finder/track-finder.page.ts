@@ -90,6 +90,10 @@ export class TrackFinderPage implements AfterViewInit {
   goToTrackFinder() {
     this.router.navigate(['/track-finder']);
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
   goToModifications() {
     this.router.navigate(['/modifications']);
   }
