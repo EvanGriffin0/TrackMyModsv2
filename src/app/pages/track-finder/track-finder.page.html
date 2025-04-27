@@ -10,4 +10,35 @@
       <ion-title size="large">track-finder</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="bottom-nav">
+    <ion-grid>
+      <ion-row>
+        <!-- Garage -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
+            <ion-icon name="car-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Maps (Nearest Track) -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
+            <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Modifications -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
+            <ion-icon name="hammer-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Rider Stats -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

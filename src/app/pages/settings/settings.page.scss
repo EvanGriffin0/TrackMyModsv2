@@ -1,0 +1,42 @@
+.settings-content {
+    --background: #FFA500; /* Orange background for main content */
+    color: #fff;
+    padding: 16px;
+    position: relative;
+  }
+  
+  .content-wrapper {
+    margin-bottom: 120px; /* Ensure there's space above the bottom navigation */
+  }
+  
+  /* Styling for settings items */
+  ion-item,
+  ion-item-divider {
+    --background: transparent;
+    color: #fff;
+  }
+  
+  /* Bottom Navigation matching home page style */
+  .bottom-nav {
+    position: absolute;
+    bottom: 0; /* Pin directly to the bottom */
+    width: 100%;
+    background-color: #000; /* Black background */
+    border: 2px solid #000; /* Black border */
+    border-radius: 8px;
+    padding: 8px 0;
+  }
+  
+  /* Ensure all icons are white on this page */
+  :host {
+    ion-icon {
+      color: #fff;
+    }
+  }
+  
+  /* Customize the toggle appearance */
+  ion-toggle {
+    --handle-background: #FFA500;
+    --background: #000;
+  }
+  

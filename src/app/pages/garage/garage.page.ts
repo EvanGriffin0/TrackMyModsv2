@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './garage.page.html',
   styleUrls: ['./garage.page.scss'],
   standalone: true,
-  imports: [CommonModule,IonicModule], // Add any necessary imports here
+  imports: [CommonModule,IonicModule], 
 })
 export class GaragePage implements OnInit {
 

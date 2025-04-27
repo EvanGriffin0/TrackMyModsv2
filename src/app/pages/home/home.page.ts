@@ -1,22 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { AuthService } from '../../services/auth.services'; // Ensure correct path to AuthService
+import { AuthService } from '../../services/auth.services'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, ]  // Added HttpClientModule here
+  imports: [CommonModule, IonicModule, ]  
 })
 export class HomePage implements OnInit {
 
-  data: { title: string }[] = [];
-  constructor(private AuthService: AuthService) { }
-
+  constructor(private AuthService: AuthService, private router: Router) { }
   ngOnInit() {
-    // Example Observable: Fetching dummy data from an API
+    
    
   }
+
+  goToGarage() {
+    this.router.navigate(['/garage']);
+  }
+  goToTrackFinder() {
+    this.router.navigate(['/track-finder']);
+  }
+  
+  goToModifications() {
+    this.router.navigate(['/modifications']);
+  }
+
+
+  goToSettings() {
+    this.router.navigate(['/settings']);
+  }
+
+  goToTrackMode() {
+    this.router.navigate(['/track-mode']);
+  }
+
 }

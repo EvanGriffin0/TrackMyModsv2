@@ -1,2 +1,11 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+    /* Change this if it's still blue */
+    --ion-color-primary: #000;
+    --ion-color-primary-rgb: 0, 0, 0;
+    --ion-color-primary-contrast: #FFA500;
+    --ion-color-primary-contrast-rgb: 255, 165, 0;
+    // Other colors...
+  }
+  

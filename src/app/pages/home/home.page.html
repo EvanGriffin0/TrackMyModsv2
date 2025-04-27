@@ -1,19 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Blank</ion-title>
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <!-- Settings Icon in the top left -->
+    <ion-buttons slot="start">
+      <ion-button (click)="goToSettings()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>TrackMyMods</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <!-- Page content goes here -->
-  <ion-list>
-    <ion-item *ngFor="let item of data">
-      <ion-label>{{ item.title }}</ion-label>
-    </ion-item>
-  </ion-list>
+<ion-content fullscreen class="home-content">
+  <!-- Main Content: Logo & Description -->
+  <div class="content-wrapper">
+    <img src="../../../assets/logo/Logo.svg" alt="TrackMyMods Logo" class="app-logo">
+    <h1>Welcome to TrackMyMods</h1>
+    <p>
+      Your ultimate companion for car enthusiasts! Log and track your modifications, explore nearby race tracks, and view your performance stats.
+      Whether you're upgrading your ride or racing, we’ve got you covered.
+    </p>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <ion-grid>
+      <ion-row>
+        <!-- Garage -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
+            <ion-icon name="car-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Maps (Nearest Track) -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
+            <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Modifications -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
+            <ion-icon name="hammer-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <!-- Rider Stats -->
+        <ion-col class="ion-text-center">
+          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
