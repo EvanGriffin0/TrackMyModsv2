@@ -1,13 +1,14 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>account-recovery</ion-title>
+    <ion-title>Account Recovery</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">account-recovery</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="recoveryForm" (ngSubmit)="sendPasswordReset()">
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="recoveryForm.invalid">Send Reset Email</ion-button>
+  </form>
 </ion-content>

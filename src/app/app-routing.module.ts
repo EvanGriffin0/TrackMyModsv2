@@ -2,18 +2,63 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'splash', pathMatch: 'full' },
-  { path: 'splash', loadChildren: () => import('./pages/splash/splash.module').then(m => m.SplashPageModule) },
-  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule) },
-  { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule) },
-  { path: 'signup', loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule) },
-  { path: 'account-recovery', loadChildren: () => import('./pages/account-recovery/account-recovery.module').then(m => m.AccountRecoveryPageModule) },
-  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule) },
-  { path: 'settings', loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule) },
-  { path: 'garage', loadChildren: () => import('./pages/garage/garage.module').then(m => m.GaragePageModule) },
-  { path: 'modifications', loadChildren: () => import('./pages/modifications/modifications.module').then(m => m.ModificationsPageModule) },
-  { path: 'track-finder', loadChildren: () => import('./pages/track-finder/track-finder.module').then(m => m.TrackFinderPageModule) },
-  { path: 'track-mode', loadChildren: () => import('./pages/track-mode/track-mode.module').then(m => m.TrackModePageModule) },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then( m => m.HomePage)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'splash',
+    loadComponent: () => import('./pages/splash/splash.page').then( m => m.SplashPage)
+  },
+  {
+    path: 'welcome',
+    loadComponent: () => import('./pages/welcome/welcome.page').then( m => m.WelcomePage)
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.page').then((m) => m.LoginPage)
+  },
+  {
+    path: 'signup',
+    loadComponent: () => import('./pages/signup/signup.page').then( m => m.SignupPage)
+  },
+  {
+    path: 'account-recovery',
+    loadComponent: () =>
+      import('./pages/account-recovery/account-recovery.page').then(
+        (m) => m.AccountRecoveryPage
+      )
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
+  },
+  {
+    path: 'garage',
+    loadComponent: () => import('./pages/garage/garage.module').then( m => m.GaragePageModule)
+  },
+  {
+    path: 'modifications',
+    loadComponent: () => import('./pages/modifications/modifications.page').then( m => m.ModificationsPage)
+  },
+  {
+    path: 'track-finder',
+    loadComponent: () => import('./pages/track-finder/track-finder.page').then( m => m.TrackFinderPage)
+  },
+  {
+    path: 'track-mode',
+    loadComponent: () => import('./pages/track-mode/track-mode.page').then( m => m.TrackModePage)
+  },
 ];
 
 @NgModule({

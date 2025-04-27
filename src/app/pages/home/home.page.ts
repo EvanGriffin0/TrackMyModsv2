@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  data: any;
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    // Example Observable: Fetching dummy data from an API
+    this.http.get('https://jsonplaceholder.typicode.com/posts')
+      .subscribe(response => {
+        this.data = response;
+        console.log('Data from observable', this.data);
+      }, error => {
+        console.error('Error fetching data', error);
+      });
   }
-
 }

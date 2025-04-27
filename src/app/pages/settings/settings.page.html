@@ -1,13 +1,12 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Metric Units</ion-label>
+    <ion-toggle checked="true"></ion-toggle>
+  </ion-item>
+  <ion-button expand="block" routerLink="/account-recovery">Change Password</ion-button>
 </ion-content>

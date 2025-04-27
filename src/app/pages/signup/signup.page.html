@@ -1,13 +1,52 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].invalid">
+      <small *ngIf="signupForm.controls['email'].errors?.['required']">Email is required.</small>
+      <small *ngIf="signupForm.controls['email'].errors?.['email']">Enter a valid email.</small>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].invalid">
+      <small>Password is required.</small>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="signupForm.errors?.notSame && signupForm.controls['confirmPassword'].touched">
+      <small>Passwords do not match.</small>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Mother's Maiden Name</ion-label>
+      <ion-input type="text" formControlName="mothersMaiden"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="signupForm.controls['mothersMaiden'].touched && signupForm.controls['mothersMaiden'].invalid">
+      <small>This field is required.</small>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Name of Your First Pet</ion-label>
+      <ion-input type="text" formControlName="firstPet"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="signupForm.controls['firstPet'].touched && signupForm.controls['firstPet'].invalid">
+      <small>This field is required.</small>
+    </ion-text>
+
+    <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">Sign Up</ion-button>
+  </form>
 </ion-content>
