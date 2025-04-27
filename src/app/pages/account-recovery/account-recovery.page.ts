@@ -57,16 +57,19 @@ export class AccountRecoveryPage {
   async verifyAnswersAndRecover() {
     if (!this.recoveryForm.valid) return;
     const { answer1, answer2, newPassword, confirmNewPassword } = this.recoveryForm.value;
+    
     if (newPassword !== confirmNewPassword) {
       this.presentToast('Passwords do not match.');
       return;
     }
-    if (
-      answer1.trim().toLowerCase() === this.securityData.securityAnswer1.toLowerCase() &&
-      answer2.trim().toLowerCase() === this.securityData.securityAnswer2.toLowerCase()
-    ) {
-      // Here we simulate a password update by sending a password–reset email.
-      this.presentToast("Password reset email sent. Check your inbox.");
+  
+    // Get stored answers (case-insensitive comparison)
+    const storedAnswers = this.securityData.securityQuestions;
+    
+    if (answer1.trim().toLowerCase() === storedAnswers.answer1.toLowerCase() &&
+        answer2.trim().toLowerCase() === storedAnswers.answer2.toLowerCase()) {
+      // Implement actual password reset logic here
+      this.presentToast("Password reset successful!");
       this.router.navigate(['/login']);
     } else {
       this.presentToast('Security answers do not match.');

@@ -1,62 +1,72 @@
-// src/app/services/auth.service.ts
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { lastValueFrom } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Firestore, doc, setDoc, collection, query, where, getDocs } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore
-  ) {}
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
 
-  // Sign up a new user and store security question answers in Firestore.
   async signUp(email: string, password: string, securityAnswer1: string, securityAnswer2: string) {
     try {
-      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      const uid = userCredential.user?.uid;
-  
-      if (!uid) throw new Error('User UID not found');
-  
-      // Write security answers to Firestore
-      await this.afs.collection('userSecurity').doc(uid).set({
+      // Create user
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+
+      // Save security questions to Firestore
+      await this.saveSecurityQuestions(
+        userCredential.user.uid,
         email,
         securityAnswer1,
         securityAnswer2
-      });
-  
+      );
+
       return userCredential;
     } catch (error) {
-      console.error('Firestore Error:', error); // Log detailed error
-      throw error; // Propagate to component
+      console.error('Signup Error:', error);
+      throw error;
     }
   }
-  
 
-  // Login a user.
-  async login(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
-  }
-
-  // Retrieve stored security data (by email) from Firestore.
-  async getSecurityData(email: string) {
-    const query$ = this.afs
-      .collection('userSecurity', ref => ref.where('email', '==', email))
-      .get();
-  
-    const querySnapshot = await lastValueFrom(query$); // ✅ Modern approach
-  
-    let securityData: any = null;
-    if (!querySnapshot.empty) {
-      querySnapshot.forEach(doc => {
-        securityData = doc.data();
+  private async saveSecurityQuestions(uid: string, email: string, answer1: string, answer2: string) {
+    try {
+      const userDoc = doc(this.firestore, `userSecurity/${uid}`);
+      await setDoc(userDoc, {
+        email,
+        securityQuestions: {
+          answer1,
+          answer2
+        },
+        createdAt: new Date().toISOString()
       });
+    } catch (error) {
+      console.error('Firestore Save Error:', error);
+      throw error;
     }
-    return securityData;
   }
 
+  async getSecurityData(email: string) {
+    try {
+      const q = query(
+        collection(this.firestore, 'userSecurity'),
+        where('email', '==', email)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs[0]?.data();
+    } catch (error) {
+      console.error('Security Data Error:', error);
+      throw error;
+    }
+  }
 
+  // Update login method
+  async login(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
+  }
 }
