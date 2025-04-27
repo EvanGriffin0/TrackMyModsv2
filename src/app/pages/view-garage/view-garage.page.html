@@ -1,15 +1,13 @@
 <ion-header>
-  <ion-header translucent>
-    <ion-toolbar style="--background: #000;">
-      <!-- Back Button (or you can add another if needed) -->
-      <ion-buttons slot="start">
-        <ion-button (click)="goBack()">
-          <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title style="color: #FFA500;"> Garage</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar style="--background: #000;">
+    <!-- Back Button -->
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color: #FFA500;">Garage</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -20,24 +18,39 @@
       </ion-list-header>
 
       <ion-item-sliding *ngFor="let vehicle of vehicles$ | async">
-        <ion-item>
-          <ion-label>
-            <h2>{{ vehicle.vehicleName }}</h2>
-            <p>Type: {{ vehicle.vehicleType }}</p>
-            <p>Mileage: {{ vehicle.mileage }}</p>
-            <p>Power: {{ vehicle.power }} | Year: {{ vehicle.year }}</p>
-            <p>Modifications: {{ vehicle.modsDone }}</p>
-          </ion-label>
-
-          <ion-button 
+        <div>
+          <ion-item>
+            <ion-label>
+              <h2>{{ vehicle.vehicleName }}</h2>
+              <p>Type: {{ vehicle.vehicleType }}</p>
+              <p>Mileage: {{ vehicle.mileage }}</p>
+              <p>Power: {{ vehicle.power }} | Year: {{ vehicle.year }}</p>
+              <p>Modifications: {{ vehicle.modsDone }}</p>
+            </ion-label>
+            <ion-button 
               slot="end" 
               color="danger" 
               (click)="deleteVehicle(vehicle.id)"
-              class="delete-button"
-            >
+              class="delete-button">
               <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-button>
-        </ion-item>
+          </ion-item>
+
+          <!-- Modifications Details -->
+          <div *ngIf="vehicle.modifications && vehicle.modifications.length > 0" class="modifications-container">
+            <ion-item-divider color="light">
+              <ion-label>Modifications Details</ion-label>
+            </ion-item-divider>
+            <ion-item *ngFor="let mod of vehicle.modifications">
+              <ion-label>
+                <h3>{{ mod.name }}</h3>
+                <p>{{ mod.description }}</p>
+                <p>Type: {{ mod.type }}</p>
+                <p>Price: {{ mod.cost | currency }}</p>
+              </ion-label>
+            </ion-item>
+          </div>
+        </div>
 
         <ion-item-options side="end">
           <ion-item-option color="danger" (click)="deleteVehicle(vehicle.id)">
@@ -52,36 +65,38 @@
       </div>
     </ion-list>
   </div>
+</ion-content>
 
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
+<!-- Bottom Navigation placed in the footer -->
+<ion-footer>
+  <ion-toolbar style="--background: #000;">
     <ion-grid>
       <ion-row>
         <!-- Garage -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
-            <ion-icon name="car-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/garage" (click)="goToGarage()">
+            <ion-icon name="car-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
-        <!-- Maps (Nearest Track) -->
+        <!-- Track Finder -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
-            <ion-icon name="map-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/track-finder" (click)="goToTrackFinder()">
+            <ion-icon name="map-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Modifications -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
-            <ion-icon name="hammer-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/modifications" (click)="goToModifications()">
+            <ion-icon name="hammer-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
-        <!-- Rider Stats -->
+        <!-- Stats -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
-            <ion-icon name="stats-chart-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/track-mode" (click)="goToTrackMode()">
+            <ion-icon name="stats-chart-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>

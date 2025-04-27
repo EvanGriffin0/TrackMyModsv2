@@ -1,23 +1,88 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { IonHeader } from "@ionic/angular/standalone";
+import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.services';
+import { IonHeader } from "@ionic/angular/standalone";
+import { CommonModule } from '@angular/common';
+import { IonicModule, ToastController, AlertController } from '@ionic/angular';
+
+declare var google: any; // Declare google from Maps API
 
 @Component({
   selector: 'app-track-finder',
   templateUrl: './track-finder.page.html',
   styleUrls: ['./track-finder.page.scss'],
   standalone: true,
-  imports: [CommonModule,IonicModule],
+  imports: [CommonModule, IonicModule]
 })
-export class TrackFinderPage implements OnInit {
+export class TrackFinderPage implements AfterViewInit {
+  map: any;
+  mondelloDistance: number = 0;
+  bishopcourtDistance: number = 0;
 
-  constructor(private AuthService: AuthService, private router: Router) { }
-  
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.loadMap();
+  }
+
+  loadMap() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLatLng = new google.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+
+          const mapOptions = {
+            center: userLatLng,
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+          };
+
+          // Initialize the map
+          this.map = new google.maps.Map(
+            document.getElementById("map"),
+            mapOptions
+          );
+
+          // Marker for user's location
+          new google.maps.Marker({
+            position: userLatLng,
+            map: this.map,
+            title: "Your Location",
+          });
+
+          // Fixed track coordinates
+          const mondelloLatLng = new google.maps.LatLng(53.25750, -6.74500);
+          const bishopcourtLatLng = new google.maps.LatLng(54.75844, -2.69531);
+
+          // Calculate distances using computeDistanceBetween from the geometry library
+          if (google.maps.geometry && google.maps.geometry.spherical) {
+            const distanceMondello = google.maps.geometry.spherical.computeDistanceBetween(
+              userLatLng,
+              mondelloLatLng
+            );
+            this.mondelloDistance = distanceMondello / 1000; // convert meters to km
+
+            const distanceBishopCourt = google.maps.geometry.spherical.computeDistanceBetween(
+              userLatLng,
+              bishopcourtLatLng
+            );
+            this.bishopcourtDistance = distanceBishopCourt / 1000; // convert meters to km
+          }
+        },
+        (error) => {
+          console.error("Error retrieving location", error);
+        }
+      );
+    } else {
+      console.error("Geolocation not supported by this browser.");
+    }
+  }
+
+  // Navigation functions
+  goBack() {
+    this.router.navigate(['/garage']);
   }
   goToGarage() {
     this.router.navigate(['/garage']);
@@ -25,17 +90,10 @@ export class TrackFinderPage implements OnInit {
   goToTrackFinder() {
     this.router.navigate(['/track-finder']);
   }
-  
   goToModifications() {
     this.router.navigate(['/modifications']);
   }
-
-
-  goToSettings() {
-    this.router.navigate(['/settings']);
-  }
-
   goToTrackMode() {
-    this.router.navigate(['/track-mode']);
+    this.router.navigate(['/view-garage']);
   }
 }

@@ -1,23 +1,22 @@
 <ion-header>
   <ion-toolbar style="--background: #000;">
-    <!-- Back Button (or you can add another if needed) -->
+    <!-- Back Button -->
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="color: #FFA500;">Settings</ion-title>
+    <ion-title style="color: #FFA500;">Modifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<!-- Add extra bottom padding to ensure content isn't hidden behind the footer -->
+<ion-content class="ion-padding" style="padding-bottom: 80px;">
   <!-- Vehicle Selection -->
   <ion-item>
     <ion-label>Select Vehicle</ion-label>
     <ion-select [(ngModel)]="selectedVehicleId">
-      <ion-select-option 
-        *ngFor="let vehicle of vehicles$ | async" 
-        [value]="vehicle.id">
+      <ion-select-option *ngFor="let vehicle of vehicles$ | async" [value]="vehicle.id">
         {{ vehicle.vehicleName }}
       </ion-select-option>
     </ion-select>
@@ -47,40 +46,42 @@
     <ion-textarea [(ngModel)]="modification.description"></ion-textarea>
   </ion-item>
 
-  <ion-button expand="block" (click)="saveModification()" 
+  <ion-button expand="block" (click)="saveModification()"
     [disabled]="!selectedVehicleId || !modification.name">
     Save Modification
   </ion-button>
+</ion-content>
 
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
+<!-- Fixed Bottom Navigation -->
+<ion-footer>
+  <ion-toolbar style="--background: #000;">
     <ion-grid>
       <ion-row>
         <!-- Garage -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToGarage()" fill="clear" routerLink="/garage">
-            <ion-icon name="car-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/garage" (click)="goToGarage()">
+            <ion-icon name="car-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Maps (Nearest Track) -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackFinder()" fill="clear" routerLink="/track-finder">
-            <ion-icon name="map-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/track-finder" (click)="goToTrackFinder()">
+            <ion-icon name="map-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Modifications -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToModifications()"  fill="clear" routerLink="/modifications">
-            <ion-icon name="hammer-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/modifications" (click)="goToModifications()">
+            <ion-icon name="hammer-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
         <!-- Rider Stats -->
         <ion-col class="ion-text-center">
-          <ion-button (click)="goToTrackMode()" fill="clear" routerLink="/track-mode">
-            <ion-icon name="stats-chart-outline"></ion-icon>
+          <ion-button fill="clear" routerLink="/track-mode" (click)="goToTrackMode()">
+            <ion-icon name="stats-chart-outline" style="color: #FFA500;"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>

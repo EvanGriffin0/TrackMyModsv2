@@ -5,7 +5,52 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Firestore, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
+import { QueryDocumentSnapshot } from '@angular/fire/firestore';
+import { Timestamp } from 'firebase/firestore';
+import { switchMap, map } from 'rxjs/operators';
+
+// Define the Modification interface
+interface Modification {
+  id?: string;
+  name: string;
+  cost: number;
+  type: string;
+  description: string;
+  date: Date;  // Converted from Firestore Timestamp
+  image: string;
+  vehicleId: string;
+}
+
+// Define the Vehicle interface
+interface Vehicle {
+  id: string;
+  vehicleName?: string;
+  vehicleType?: string;
+  mileage?: string;
+  power?: string;
+  year?: string;
+  modsDone: number;
+  modifications: Modification[];
+}
+
+// Firestore data converter for modifications
+const modificationConverter = {
+  toFirestore: (data: Modification) => data,
+  fromFirestore: (snap: QueryDocumentSnapshot) => {
+    const data = snap.data();
+    return {
+      id: snap.id,
+      name: data['name'],
+      cost: data['cost'],
+      type: data['type'],
+      description: data['description'],
+      date: (data['date'] as Timestamp).toDate(), // Convert Firestore timestamp to Date
+      image: data['image'],
+      vehicleId: data['vehicleId']
+    } as Modification;
+  }
+};
 
 @Component({
   selector: 'app-view-garage',
@@ -15,7 +60,7 @@ import { Observable, of } from 'rxjs';
   imports: [CommonModule, IonicModule]
 })
 export class ViewGaragePage implements OnInit {
-  vehicles$!: Observable<any[]>;
+  vehicles$!: Observable<Vehicle[]>;
   user: any = null;
 
   constructor(
@@ -32,7 +77,32 @@ export class ViewGaragePage implements OnInit {
       if (user) {
         this.user = user;
         const vehiclesRef = collection(this.firestore, `users/${user.uid}/vehicles`);
-        this.vehicles$ = collectionData(vehiclesRef, { idField: 'id' });
+        
+        this.vehicles$ = collectionData(vehiclesRef, { idField: 'id' }).pipe(
+          switchMap((vehicles: any[]) => {
+            // Check if there are any vehicles – if not, return an empty array observable
+            if (vehicles.length > 0) {
+              return combineLatest(
+                vehicles.map(vehicle => {
+                  const modsRef = collection(
+                    this.firestore, 
+                    `users/${user.uid}/vehicles/${vehicle.id}/modifications`
+                  ).withConverter(modificationConverter);
+                  
+                  return collectionData(modsRef).pipe(
+                    map((modifications: Modification[]) => ({
+                      ...vehicle,
+                      modifications: modifications,
+                      modsDone: modifications.length
+                    } as Vehicle))
+                  );
+                })
+              );
+            } else {
+              return of([]);
+            }
+          })
+        );
       } else {
         this.vehicles$ = of([]);
       }
@@ -50,10 +120,7 @@ export class ViewGaragePage implements OnInit {
     if (!confirmDelete) return;
   
     try {
-      const vehicleDoc = doc(
-        this.firestore, 
-        `users/${user.uid}/vehicles/${vehicleId}`
-      );
+      const vehicleDoc = doc(this.firestore, `users/${user.uid}/vehicles/${vehicleId}`);
       await deleteDoc(vehicleDoc);
     } catch (error) {
       console.error('Error deleting vehicle:', error);
@@ -92,7 +159,6 @@ export class ViewGaragePage implements OnInit {
     await toast.present();
   }
 
-
   goBack() {
     this.location.back();
   }
@@ -100,6 +166,7 @@ export class ViewGaragePage implements OnInit {
   goToGarage() {
     this.router.navigate(['/garage']);
   }
+  
   goToTrackFinder() {
     this.router.navigate(['/track-finder']);
   }
@@ -107,7 +174,6 @@ export class ViewGaragePage implements OnInit {
   goToModifications() {
     this.router.navigate(['/modifications']);
   }
-
 
   goToSettings() {
     this.router.navigate(['/settings']);

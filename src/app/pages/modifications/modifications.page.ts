@@ -7,6 +7,16 @@ import { Auth,onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+export interface Modification {
+  name: string;
+  cost: number;
+  type: 'performance' | 'cosmetic';
+  description: string;
+  image: string;
+  date: Date;
+  vehicleId?: string;
+}
+
 @Component({
   selector: 'app-modifications',
   templateUrl: './modifications.page.html',
@@ -14,6 +24,8 @@ import { Location } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })
+
+
 export class ModificationsPage {
   vehicles$: any;
   selectedVehicleId: string | null = null;
@@ -26,6 +38,8 @@ export class ModificationsPage {
     date: new Date()
   };
 
+
+  
   ngOnInit() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -44,6 +58,7 @@ export class ModificationsPage {
     this.loadVehicles();
   }
 
+  
   async loadVehicles() {
     const user = this.auth.currentUser;
     if (user) {
@@ -102,7 +117,7 @@ export class ModificationsPage {
   }
 
   goToTrackMode() {
-    this.router.navigate(['/track-mode']);
+    this.router.navigate(['/view-garage']);
   }
 
   goBack() {
