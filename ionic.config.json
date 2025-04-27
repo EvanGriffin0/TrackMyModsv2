@@ -1,0 +1,7 @@
+{
+  "name": "TrackMyMods",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
